@@ -8,8 +8,6 @@
 #include "Triangle.hpp"
 #include "nvg/nanovg_gl.h"
 #include "nvg/nanovg_gl_utils.h"
-#include "../../../../../../AppData/Local/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/jni.h"
-#include "../../../../../../AppData/Local/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/GLES2/gl2.h"
 #include <jni.h>
 
 #define TRIANGLE_HEIGHT 100
