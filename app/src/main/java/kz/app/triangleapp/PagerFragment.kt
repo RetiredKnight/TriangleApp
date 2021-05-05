@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -14,6 +15,7 @@ class PagerFragment : Fragment(), GLSurfaceView.Renderer, SeekBar.OnSeekBarChang
 
     private lateinit var glSurfaceView: GLSurfaceView
     private lateinit var seekbar: SeekBar
+    private lateinit var radTv: TextView
     private var width = 0.0f
     private var height = 0.0f
     private var angle = 0.0f
@@ -32,6 +34,8 @@ class PagerFragment : Fragment(), GLSurfaceView.Renderer, SeekBar.OnSeekBarChang
 
         glSurfaceView = view.findViewById(R.id.gl_surface_view)
         seekbar = view.findViewById(R.id.seek_bar)
+        radTv = view.findViewById(R.id.rad_tv)
+
         seekbar.setOnSeekBarChangeListener(this)
 
         glSurfaceView.setEGLContextClientVersion(2)
@@ -42,6 +46,7 @@ class PagerFragment : Fragment(), GLSurfaceView.Renderer, SeekBar.OnSeekBarChang
 
     private external fun drawTriangle(width: Float, height: Float, angle: Float)
     private external fun init()
+    private external fun getAngle() : Float
 
     companion object {
         init {
@@ -53,6 +58,7 @@ class PagerFragment : Fragment(), GLSurfaceView.Renderer, SeekBar.OnSeekBarChang
     override fun onDrawFrame(p0: GL10?) {
         p0?.glClear(GL10.GL_COLOR_BUFFER_BIT or GL10.GL_DEPTH_BUFFER_BIT)
         drawTriangle(width, height, angle)
+        radTv.text = getAngle().toString()
     }
 
     override fun onSurfaceChanged(p0: GL10?, p1: Int, p2: Int) {
@@ -68,7 +74,6 @@ class PagerFragment : Fragment(), GLSurfaceView.Renderer, SeekBar.OnSeekBarChang
     override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
         angle = p1.toFloat()
         glSurfaceView.requestRender()
-
     }
 
     override fun onStartTrackingTouch(p0: SeekBar?) {

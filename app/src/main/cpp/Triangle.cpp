@@ -71,6 +71,7 @@ double Triangle::degreesToRadians(double degree) {
 }
 
 Triangle *triangle;
+float angle;
 
 extern "C" JNIEXPORT void JNICALL
 Java_kz_app_triangleapp_PagerFragment_drawTriangle(JNIEnv *env, jobject obj,
@@ -81,4 +82,13 @@ Java_kz_app_triangleapp_PagerFragment_drawTriangle(JNIEnv *env, jobject obj,
 extern "C" JNIEXPORT void JNICALL
 Java_kz_app_triangleapp_PagerFragment_init(JNIEnv *env, jobject thiz) {
     triangle = new Triangle();
+    angle = 0.0f;
+    triangle -> setRadCallback([](float degree) -> void {
+        angle = degree;
+    });
+}
+
+extern "C" JNIEXPORT jfloat JNICALL
+Java_kz_app_triangleapp_PagerFragment_getAngle(JNIEnv *env, jobject thiz) {
+    return angle;
 }
