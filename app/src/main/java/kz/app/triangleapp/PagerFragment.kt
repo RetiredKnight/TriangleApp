@@ -25,7 +25,6 @@ class PagerFragment : Fragment(), GLSurfaceView.Renderer, SeekBar.OnSeekBarChang
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        init()
         return inflater.inflate(R.layout.fragment_pager, container, false)
     }
 
@@ -36,12 +35,11 @@ class PagerFragment : Fragment(), GLSurfaceView.Renderer, SeekBar.OnSeekBarChang
         seekbar = view.findViewById(R.id.seek_bar)
         radTv = view.findViewById(R.id.rad_tv)
 
-        seekbar.setOnSeekBarChangeListener(this)
-
         glSurfaceView.setEGLContextClientVersion(2)
         glSurfaceView.setRenderer(this)
         glSurfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
 
+        seekbar.setOnSeekBarChangeListener(this)
     }
 
     private external fun drawTriangle(width: Float, height: Float, angle: Float)
@@ -56,18 +54,23 @@ class PagerFragment : Fragment(), GLSurfaceView.Renderer, SeekBar.OnSeekBarChang
 
 
     override fun onDrawFrame(p0: GL10?) {
-        p0?.glClear(GL10.GL_COLOR_BUFFER_BIT or GL10.GL_DEPTH_BUFFER_BIT)
+        p0?.glClear(GL10.GL_COLOR_BUFFER_BIT)
         drawTriangle(width, height, angle)
-        radTv.text = getAngle().toString()
+        try {
+            radTv.text = getAngle().toString()
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
     }
 
     override fun onSurfaceChanged(p0: GL10?, p1: Int, p2: Int) {
-        drawTriangle(p1.toFloat(), p2.toFloat(), 0.0f)
         width = p1.toFloat()
         height = p2.toFloat()
+        drawTriangle(p1.toFloat(), p2.toFloat(), 0.0f)
     }
 
     override fun onSurfaceCreated(p0: GL10?, p1: EGLConfig?) {
+        init()
     }
 
     override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
