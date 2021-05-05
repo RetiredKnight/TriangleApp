@@ -70,20 +70,20 @@ double Triangle::degreesToRadians(double degree) {
     return (degree * (pi / 180));
 }
 
-Triangle *triangle;
+Triangle triangle;
 float angle;
 
 extern "C" JNIEXPORT void JNICALL
 Java_kz_app_triangleapp_PagerFragment_drawTriangle(JNIEnv *env, jobject obj,
                                                                  jfloat width, jfloat height, jfloat angle) {
-    triangle -> draw(width, height, 3.0f, angle);
+    triangle.draw(width, height, 3.0f, angle);
 }
 
 extern "C" JNIEXPORT void JNICALL
 Java_kz_app_triangleapp_PagerFragment_init(JNIEnv *env, jobject thiz) {
-    triangle = new Triangle();
+
     angle = 0.0f;
-    triangle -> setRadCallback([](float degree) -> void {
+    triangle.setRadCallback([](float degree) -> void {
         angle = degree;
     });
 }

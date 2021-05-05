@@ -68,7 +68,6 @@ class PagerFragment : Fragment(), GLSurfaceView.Renderer, SeekBar.OnSeekBarChang
     }
 
     override fun onSurfaceCreated(p0: GL10?, p1: EGLConfig?) {
-
     }
 
     override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
